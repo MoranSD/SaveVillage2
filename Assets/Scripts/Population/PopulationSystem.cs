@@ -11,6 +11,8 @@ public class PopulationSystem : MonoBehaviour
     public List<EmployeedPopulation> EmployeedPopulation = new();//выданные рабочие из здания в здание и количество
     public List<IPopulationNeedBuilding> PopulationNeedBuildings = new();//здания, которым нужна популяция для работы
 
+    private List<IPopulationBuilding> populationBuildings = new();
+
     private void Awake()
     {
         G.PopulationSystem = this;
@@ -26,6 +28,9 @@ public class PopulationSystem : MonoBehaviour
     {
         G.BuildSystem.OnBuilt -= OnBuiltBuilding;
         G.BuildSystem.OnDestroyed -= OnBuildingDestroyed;
+
+        foreach (var populationBuilding in populationBuildings)
+            populationBuilding.OnLostPopulation -= OnBuildingLostPopulation;
     }
 
     public int GetEmployeedPopulationCount() => EmployeedPopulation.Sum(x => x.Count);
@@ -58,12 +63,60 @@ public class PopulationSystem : MonoBehaviour
         return employees;
     }
 
+    private void OnBuildingLostPopulation(IPopulationBuilding building, int lostCount)
+    {
+        G.Main.GameState.Population -= lostCount;
+
+        if (BuildingsRemainingPopulation[building.UnicId] >= lostCount)
+        {
+            BuildingsRemainingPopulation[building.UnicId] -= lostCount;
+        }
+        else
+        {
+            int remainingToRemoveCount = lostCount - BuildingsRemainingPopulation[building.UnicId];
+            BuildingsRemainingPopulation[building.UnicId] = 0;
+
+            for (int i = EmployeedPopulation.Count - 1; i >= 0; i--)
+            {
+                var established = EmployeedPopulation[i];
+
+                if (established.From != building.UnicId) continue;
+
+                var to = PopulationNeedBuildings.First(x => x.UnicId == established.To);
+
+                if(established.Count >= remainingToRemoveCount)
+                {
+                    to.RemovePopulation(remainingToRemoveCount);
+
+                    if(remainingToRemoveCount == established.Count)
+                        EmployeedPopulation.RemoveAt(i);
+
+                    break;
+                }
+                else
+                {
+                    remainingToRemoveCount -= established.Count;
+                    to.RemovePopulation(established.Count);
+                    EmployeedPopulation.RemoveAt(i);
+
+                    if (remainingToRemoveCount == 0)
+                        break;
+                }
+            }
+
+            UpdatePopulationEmployees();
+        }
+    }
+
     private void OnBuiltBuilding(Building building)
     {
         if (building is IPopulationBuilding populationBuilding)
         {
             G.Main.GameState.Population += populationBuilding.Population;
             BuildingsRemainingPopulation.Add(building.UnicId, populationBuilding.Population);
+
+            populationBuildings.Add(populationBuilding);
+            populationBuilding.OnLostPopulation += OnBuildingLostPopulation;
         }
         else if (building is IPopulationNeedBuilding populationNeedBuilding)
         {
@@ -80,6 +133,9 @@ public class PopulationSystem : MonoBehaviour
             G.Main.GameState.Population -= populationBuilding.Population;
             BuildingsRemainingPopulation.Remove(building.UnicId);
             RemoveEstablishedPopulation(populationBuilding);
+
+            populationBuildings.Remove(populationBuilding);
+            populationBuilding.OnLostPopulation -= OnBuildingLostPopulation;
         }
         else if (building is IPopulationNeedBuilding populationNeedBuilding)
         {

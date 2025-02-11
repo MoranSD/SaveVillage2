@@ -6,25 +6,25 @@ public class EarnBuilding : PopulationNeedBuilding
     protected override void Awake()
     {
         base.Awake();
-        G.Main.OnDayComplete += OnDayComplete;
+        EventBus.Subscribe<DayBeginEvent>(OnDayBegin);
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        G.Main.OnDayComplete -= OnDayComplete;
+        EventBus.Unsubscribe<DayBeginEvent>(OnDayBegin);
     }
 
     public override string GetInfo()
     {
-        var info = $"earns {RevenueCount} money\nat the end of each day\n\n";
+        var info = $"earns {RevenueCount} money\nat the start of each day\n\n";
 
         info += base.GetInfo();
 
         return info;
     }
 
-    private void OnDayComplete()
+    private void OnDayBegin(DayBeginEvent dayBegin)
     {
         if (CurrentPopulationCount < NeedPopulationCount)
             return;

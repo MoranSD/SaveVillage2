@@ -11,6 +11,7 @@ public static class G
     public static Wallet Wallet;
     public static PopulationSystem PopulationSystem;
     public static StatsDrawer StatsDrawer;
+    public static HungrySystem HungrySystem;
 }
 
 public class GameState
@@ -19,12 +20,14 @@ public class GameState
     public int MoneyCount;
     public int Population;
     public int Day;
+    public int FoodCount;
 }
+
+public struct DayBeginEvent { }
+public struct DayCompleteEvent { }
 
 public class Main : MonoBehaviour
 {
-    public event Action OnDayComplete;
-
     public GameConfig GameConfig;
     public GameState GameState;
 
@@ -63,8 +66,9 @@ public class Main : MonoBehaviour
         {
             //skip day
             GameState.Day++;
+            EventBus.Invoke(new DayCompleteEvent());
+            EventBus.Invoke(new DayBeginEvent());
             G.StatsDrawer.UpdateDraw();
-            OnDayComplete?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -72,7 +76,15 @@ public class Main : MonoBehaviour
             var b = G.BuildSystem.Buildings.FirstOrDefault(x => x.transform.position == (Vector3)(Vector2)GameMath.MouseToGridWorld());
 
             if (b != null)
-                b.ApplyDamage(b.Health);
+                b.Kill();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            var b = G.BuildSystem.Buildings.FirstOrDefault(x => x.transform.position == (Vector3)(Vector2)GameMath.MouseToGridWorld());
+
+            if (b != null && b is PopulationBuilding)
+                ((PopulationBuilding)b).RemoveOnePopulation();
         }
     }
 
@@ -89,6 +101,8 @@ public class Main : MonoBehaviour
         //DayNightSystem -> ShowDay
         //wait for it
 
+        EventBus.Invoke(new DayBeginEvent());
+
         yield return SmartWait(1);
 
         G.BuildSystem.ChangeBuildingActive(true);
@@ -100,7 +114,9 @@ public class Main : MonoBehaviour
 
         yield return SmartWait(1);
 
-        OnDayComplete?.Invoke();
+        GameState.Day++;
+        EventBus.Invoke(new DayCompleteEvent());
+        G.StatsDrawer.UpdateDraw();
 
         G.BuildSystem.ChangeBuildingActive(false);
     }

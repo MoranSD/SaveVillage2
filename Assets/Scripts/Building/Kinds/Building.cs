@@ -49,6 +49,8 @@ public class Building : MonoBehaviour
             $"Health {Health}\n";
     }
 
+    public void Kill() => ApplyDamage(Health);
+
     public void ApplyDamage(int damage)
     {
         Health -= damage;

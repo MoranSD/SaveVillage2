@@ -29,12 +29,14 @@ public class StatsDrawer : MonoBehaviour
         statsText.text = 
             $"Day {G.Main.GameState.Day}\n" +
             $"$ {G.Main.GameState.MoneyCount}\n" +
+            $"Food {G.Main.GameState.FoodCount}\n" +
             $"Population {G.Main.GameState.Population}\n" +
             $"Empoleed population {G.PopulationSystem.GetEmployeedPopulationCount()}\n" +
             $"\n" +
             $"Skip smart wait - T\n" +
             $"Skip day - D\n" +
             $"Destroy building - B\n" +
+            $"Remove population - R\n" +
             $"Add money (10) - M";
     }
 

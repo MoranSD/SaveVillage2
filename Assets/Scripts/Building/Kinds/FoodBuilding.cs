@@ -5,29 +5,29 @@
     protected override void Awake()
     {
         base.Awake();
-        G.Main.OnDayComplete += OnDayComplete;
+        EventBus.Subscribe<DayCompleteEvent>(OnDayComplete, 1);
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        G.Main.OnDayComplete -= OnDayComplete;
+        EventBus.Unsubscribe<DayCompleteEvent>(OnDayComplete);
     }
 
     public override string GetInfo()
     {
-        var info = $"brings {FoodCount} meals\nat the end of each day\n\n";
+        var info = $"brings {FoodCount} meals\nat the start of each day\n\n";
 
         info += base.GetInfo();
 
         return info;
     }
 
-    private void OnDayComplete()
+    private void OnDayComplete(DayCompleteEvent dayComplete)
     {
         if (CurrentPopulationCount < NeedPopulationCount)
             return;
 
-        //add food
+        G.HungrySystem.AddFood(FoodCount);
     }
 }

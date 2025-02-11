@@ -11,18 +11,18 @@ PrefabInstance:
     - target: {fileID: 3027564366903909542, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 5231429416509325250, guid: de28148e7754407448075331d2ac5c31, type: 3}
+      objectReference: {fileID: 4396787550392057894, guid: de28148e7754407448075331d2ac5c31, type: 3}
     - target: {fileID: 6642166886181861778, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_Name
       value: Building 2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7244345729328503668, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 43.08
       objectReference: {fileID: 0}
     - target: {fileID: 7244345729328503668, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 5.89
       objectReference: {fileID: 0}
     - target: {fileID: 7244345729328503668, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -83,9 +83,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   Health: 5
-  Size: {x: 3, y: 3}
+  Size: {x: 4, y: 3}
   spriteRenderer: {fileID: 5572633345424657041}
-  debugAlpha: 0.522
+  debugAlpha: 0.52
   <NeedPopulationCount>k__BackingField: 1
   FoodCount: 3
 --- !u!212 &5572633345424657041 stripped

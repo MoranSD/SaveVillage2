@@ -29732,6 +29732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameConfig: {fileID: 11400000, guid: 80a5d8382c61ccc4593fb56e21189e9c, type: 2}
+  IsNight: 0
 --- !u!4 &2000898656
 Transform:
   m_ObjectHideFlags: 0

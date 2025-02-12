@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PopulationNeedBuilding : Building, IPopulationNeedBuilding
 {
@@ -10,7 +11,7 @@ public class PopulationNeedBuilding : Building, IPopulationNeedBuilding
         var info = base.GetInfo();
 
         info +=
-                $"Population: " +
+                $"Need population: " +
                 $"{CurrentPopulationCount}/{NeedPopulationCount}\n" +
                 $"Established population:\n";
 

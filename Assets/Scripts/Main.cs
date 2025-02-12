@@ -31,6 +31,8 @@ public class Main : MonoBehaviour
     public GameConfig GameConfig;
     public GameState GameState;
 
+    public bool IsNight;
+
     private bool skip;
 
     //init
@@ -66,7 +68,9 @@ public class Main : MonoBehaviour
         {
             //skip day
             GameState.Day++;
+            IsNight = true;
             EventBus.Invoke(new DayCompleteEvent());
+            IsNight = false;
             EventBus.Invoke(new DayBeginEvent());
             G.StatsDrawer.UpdateDraw();
         }
@@ -101,6 +105,7 @@ public class Main : MonoBehaviour
         //DayNightSystem -> ShowDay
         //wait for it
 
+        IsNight = false;
         EventBus.Invoke(new DayBeginEvent());
 
         yield return SmartWait(1);
@@ -115,6 +120,7 @@ public class Main : MonoBehaviour
         yield return SmartWait(1);
 
         GameState.Day++;
+        IsNight = true;
         EventBus.Invoke(new DayCompleteEvent());
         G.StatsDrawer.UpdateDraw();
 

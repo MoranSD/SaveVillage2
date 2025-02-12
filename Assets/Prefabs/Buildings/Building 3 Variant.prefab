@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2791507277290404646
+--- !u!1001 &6986850883546104728
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,30 +11,18 @@ PrefabInstance:
     - target: {fileID: 3027564366903909542, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6625692385018236696, guid: de28148e7754407448075331d2ac5c31, type: 3}
-    - target: {fileID: 3683598955237563811, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
-      propertyPath: Id
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3683598955237563811, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
-      propertyPath: Size.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3683598955237563811, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
-      propertyPath: Size.y
-      value: 3
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -8922806545422484088, guid: de28148e7754407448075331d2ac5c31, type: 3}
     - target: {fileID: 6642166886181861778, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_Name
-      value: Building 1 Variant
+      value: Building 3 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7244345729328503668, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7244345729328503668, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7244345729328503668, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -68,41 +56,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3683598955237563811, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6642166886181861778, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6422164142390546375}
+      addedObject: {fileID: 3928527360840545731}
   m_SourcePrefab: {fileID: 100100000, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
---- !u!212 &916901249612244864 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3027564366903909542, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
-  m_PrefabInstance: {fileID: 2791507277290404646}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8831799127587455668 stripped
+--- !u!1 &4385362867253721610 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6642166886181861778, guid: 83a1c96f190802045ae4e27c91693da6, type: 3}
-  m_PrefabInstance: {fileID: 2791507277290404646}
+  m_PrefabInstance: {fileID: 6986850883546104728}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6422164142390546375
+--- !u!114 &3928527360840545731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8831799127587455668}
+  m_GameObject: {fileID: 4385362867253721610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 444a89f4e0c81ce469e2ad719557c596, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ed9dd83ec36bc742bb4f30c88952bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 1
-  Health: 15
-  Size: {x: 3, y: 3}
-  spriteRenderer: {fileID: 916901249612244864}
-  debugAlpha: 0.233
-  <NeedPopulationCount>k__BackingField: 3
-  RevenueCount: 2
+  Id: 3
+  Health: 20
+  Size: {x: 5, y: 3}
+  spriteRenderer: {fileID: 0}
+  debugAlpha: 0.5
+  <NeedPopulationCount>k__BackingField: 5
+  respawnRate: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Game Config
   m_EditorClassIdentifier: 
   WorldSize: {x: 13, y: 13}
-  StartMoney: 500
+  StartMoney: 200
   BuildingConfigs:
   - {fileID: 11400000, guid: 692df95d4479b3f43ac3d856ffd159ff, type: 2}
   - {fileID: 11400000, guid: 7081281152721cb4a844759704ff19fe, type: 2}

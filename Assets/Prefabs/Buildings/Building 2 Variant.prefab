@@ -83,10 +83,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   Health: 5
-  Size: {x: 4, y: 3}
+  Size: {x: 5, y: 3}
   spriteRenderer: {fileID: 5572633345424657041}
   debugAlpha: 0.52
   <NeedPopulationCount>k__BackingField: 1
+  <NeedMoneyCount>k__BackingField: 1
   FoodCount: 3
 --- !u!212 &5572633345424657041 stripped
 SpriteRenderer:

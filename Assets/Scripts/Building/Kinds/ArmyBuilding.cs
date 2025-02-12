@@ -70,7 +70,7 @@ public class ArmyBuilding : PopulationNeedBuilding
 
     private void OnDayBegin(DayBeginEvent dayBegin)
     {
-        for (int i = 0; i < AliveWarriors.Count; i++)
+        for (int i = 0; i < AliveWarriors.Count;)
         {
             WarriorEntity warrior = AliveWarriors[0];
             warrior.ApplyDamage(warrior.Health);

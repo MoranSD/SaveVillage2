@@ -204,9 +204,12 @@ public class PopulationSystem : MonoBehaviour
                 MovePopulationFromAllBuildings(populationNeed);
                 updated = true;
             }
-            else
+            else if (populationNeed.MustBeFullPopulation == false)
             {
-                //для здания нет людей
+                var remainingPopulationBuildingsIds = BuildingsRemainingPopulation.Select(x => x.Key).ToList();
+                foreach (var id in remainingPopulationBuildingsIds)
+                    if (BuildingsRemainingPopulation[id] > 0)
+                        MovePopulationFromBuilding(populationNeed, id, BuildingsRemainingPopulation[id]);
             }
         }
 

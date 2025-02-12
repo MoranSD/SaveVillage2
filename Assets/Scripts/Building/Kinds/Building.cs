@@ -9,7 +9,7 @@ public class Building : MonoBehaviour
     public Sprite Sprite => spriteRenderer.sprite;
 
     public int Id;
-    public int Health;
+    public float Health;
     public Vector2Int Size;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -51,7 +51,7 @@ public class Building : MonoBehaviour
 
     public void Kill() => ApplyDamage(Health);
 
-    public void ApplyDamage(int damage)
+    public void ApplyDamage(float damage)
     {
         Health -= damage;
 

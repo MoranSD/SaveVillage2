@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        var worldSize = G.Main.GameConfig.WorldSize;
+        var worldSize = G.Main.WorldSize;
         Camera.transform.position = new Vector3(worldSize.x / 2f, worldSize.y / 2f, -10);
     }
 
@@ -44,7 +44,7 @@ public class CameraController : MonoBehaviour
     private void ClampPosition()
     {
         var clampedPosition = Camera.transform.position;
-        var worldSize = (Vector2)G.Main.GameConfig.WorldSize;
+        var worldSize = (Vector2)G.Main.WorldSize;
 
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, -BoundsOffset, worldSize.x + BoundsOffset);
         clampedPosition.y = Mathf.Clamp(clampedPosition.y, -BoundsOffset, worldSize.y + BoundsOffset);

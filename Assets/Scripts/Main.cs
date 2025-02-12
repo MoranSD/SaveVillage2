@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +11,7 @@ public static class G
     public static PopulationSystem PopulationSystem;
     public static StatsDrawer StatsDrawer;
     public static HungrySystem HungrySystem;
+    public static EnemySystem EnemySystem;
 }
 
 public class GameState
@@ -28,8 +28,13 @@ public struct DayCompleteEvent { }
 
 public class Main : MonoBehaviour
 {
-    public GameConfig GameConfig;
     public GameState GameState;
+
+    public Vector2Int WorldSize;
+    public int StartMoney;
+    public int StartFood;
+    public float DayDuration;
+    public BuildingConfig[] BuildingConfigs;
 
     public bool IsNight;
 
@@ -39,8 +44,9 @@ public class Main : MonoBehaviour
     private void Awake()
     {
         GameState = new GameState();
-        GameState.WorldGrid = new(GameConfig.WorldSize);
-        GameState.MoneyCount = GameConfig.StartMoney;
+        GameState.WorldGrid = new(WorldSize);
+        GameState.MoneyCount = StartMoney;
+        GameState.FoodCount = StartFood;
 
         G.Main = this;
     }
@@ -48,7 +54,7 @@ public class Main : MonoBehaviour
     //game start
     private void Start()
     {
-        StartCoroutine(BeginFirstDay());
+        StartCoroutine(BeginDay(true));
     }
 
     private void Update()
@@ -92,25 +98,30 @@ public class Main : MonoBehaviour
         }
     }
 
-    private IEnumerator BeginFirstDay()
+    private IEnumerator BeginDay(bool IsFirst)
     {
-        G.BuildSystem.SetBuildingActive(false);
+        if (IsFirst)
+        {
+            G.BuildSystem.SetBuildingActive(false);
+        }
+        else
+        {
+            //DayNightSystem -> ShowDay
+            //wait for it
 
-        yield return SmartWait(1);
-
-        G.BuildSystem.SetBuildingActive(true);
-    }
-    private IEnumerator BeginDay()
-    {
-        //DayNightSystem -> ShowDay
-        //wait for it
-
-        IsNight = false;
-        EventBus.Invoke(new DayBeginEvent());
+            IsNight = false;
+            GameState.Day++;
+            EventBus.Invoke(new DayBeginEvent());
+            G.StatsDrawer.UpdateDraw();
+        }
 
         yield return SmartWait(1);
 
         G.BuildSystem.ChangeBuildingActive(true);
+
+        yield return SmartWait(DayDuration);
+
+        yield return EndDay();
     }
     private IEnumerator EndDay()
     {
@@ -119,12 +130,18 @@ public class Main : MonoBehaviour
 
         yield return SmartWait(1);
 
-        GameState.Day++;
         IsNight = true;
         EventBus.Invoke(new DayCompleteEvent());
-        G.StatsDrawer.UpdateDraw();
 
         G.BuildSystem.ChangeBuildingActive(false);
+
+        G.EnemySystem.SpawnWave();
+
+        yield return new WaitUntil(() => G.EnemySystem.IsWaveDead);
+
+        yield return SmartWait(1);
+
+        yield return BeginDay(false);
     }
     private IEnumerator SmartWait(float seconds)
     {

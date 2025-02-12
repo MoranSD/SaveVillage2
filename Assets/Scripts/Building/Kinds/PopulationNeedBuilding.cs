@@ -4,7 +4,9 @@ using UnityEngine;
 public class PopulationNeedBuilding : Building, IPopulationNeedBuilding
 {
     [field: SerializeField] public int NeedPopulationCount { get; private set; }
+    public virtual bool MustBeFullPopulation { get; } = true;
     public int CurrentPopulationCount { get; private set; }
+
 
     public override string GetInfo()
     {

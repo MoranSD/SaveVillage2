@@ -22,7 +22,7 @@ public class BuildSystem : MonoBehaviour
 
     private void Start()
     {
-        var allBuildings = G.Main.GameConfig.BuildingConfigs;
+        var allBuildings = G.Main.BuildingConfigs;
         foreach (var building in allBuildings)
             view.AddBuilding(building.Id, building.Icon, building.Price);
 
@@ -65,7 +65,7 @@ public class BuildSystem : MonoBehaviour
         if (isAbleToBuild == false) return;
         if (allowBuildingId != -1 && allowBuildingId != id) return;
 
-        var buildingConfig = G.Main.GameConfig.BuildingConfigs.First(building => building.Id == id);
+        var buildingConfig = G.Main.BuildingConfigs.First(building => building.Id == id);
 
         if (G.Main.GameState.WorldGrid.CheckFreeSpace(pos, buildingConfig.Size) == false)
             return;

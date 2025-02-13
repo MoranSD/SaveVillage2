@@ -20,6 +20,7 @@ public class ToolMenu : MonoBehaviour
     private void Start()
     {
         expandButton.onClick.AddListener(() => ChangeExpand());
+
         CreateButton(() =>
         {
             G.BuildSystem.SetMenuActive(true);

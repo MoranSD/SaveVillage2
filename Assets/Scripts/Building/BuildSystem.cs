@@ -82,13 +82,12 @@ public class BuildSystem : MonoBehaviour
         OnBuilt?.Invoke(building);
     }
 
-    private void OnBuildingDestroyed(Guid buildingId)
+    private void OnBuildingDestroyed(Building building)
     {
-        var destroyedBuilding = Buildings.First(x => x.UnicId == buildingId);
-        Buildings.Remove(destroyedBuilding);
+        Buildings.Remove(building);
 
-        G.Main.GameState.WorldGrid.FreeSpace(GameMath.WorldToGridWorld(destroyedBuilding.transform.position), destroyedBuilding.Size);
+        G.Main.GameState.WorldGrid.FreeSpace(GameMath.WorldToGridWorld(building.transform.position), building.Size);
 
-        OnDestroyed?.Invoke(destroyedBuilding);
+        OnDestroyed?.Invoke(building);
     }
 }

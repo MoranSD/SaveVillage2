@@ -7,7 +7,7 @@ public class ArmyBuilding : PopulationNeedBuilding
 {
     [HideInInspector] public List<WarriorEntity> AliveWarriors = new();
     public override bool MustBeFullPopulation => false;
-    public bool IsAnyDead => AliveWarriors.Count != CurrentPopulationCount;
+    public bool IsAnyDead => AliveWarriors.Count < CurrentPopulationCount;
 
     [SerializeField] private float respawnRate;
     [SerializeField] private WarriorEntity warriorEntityPrefab;
@@ -82,6 +82,6 @@ public class ArmyBuilding : PopulationNeedBuilding
         var deadWarrior = AliveWarriors.First(x => x.UnicId == id);
         deadWarrior.OnDie -= OnWarriorDie;
         AliveWarriors.Remove(deadWarrior);
-        freeSpawnPoints.Add(warriorEntityPrefab.SpawnPointId);
+        freeSpawnPoints.Add(deadWarrior.SpawnPointId);
     }
 }

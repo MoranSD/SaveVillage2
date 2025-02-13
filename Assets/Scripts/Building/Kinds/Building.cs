@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    public event Action<Guid> OnDestroyed;
+    public event Action<Building> OnDestroyed;
 
     [field: SerializeField] public Guid UnicId { get; set; }
     public Sprite Sprite => spriteRenderer.sprite;
@@ -58,11 +58,9 @@ public class Building : MonoBehaviour
         if (Health > 0)
             return;
 
-        OnDestroyed?.Invoke(UnicId);
+        OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }
-
-    protected virtual void OnGetDestroyed() { }
 
     private void OnDrawGizmos()
     {

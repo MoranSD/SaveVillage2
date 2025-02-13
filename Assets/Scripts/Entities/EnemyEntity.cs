@@ -50,7 +50,7 @@ public class EnemyEntity : Entity
     }
     private void AttackTarget()
     {
-        if (distanceToTarget > 1.1f) return;
+        if (distanceToTarget > 1f) return;
 
         attackTime -= Time.deltaTime;
         if (attackTime > 0) return;
@@ -80,7 +80,7 @@ public class EnemyEntity : Entity
         {
             var warriorPosition = warriorTarget.transform.position;
             var dstToWarrior = warriorPosition - transform.position;
-            distanceToTarget = dstToWarrior.magnitude;
+            distanceToTarget = dstToWarrior.magnitude - StoppingDistance;
 
             if (dstToWarrior.magnitude <= StoppingDistance) return;
 
@@ -94,7 +94,7 @@ public class EnemyEntity : Entity
             var horDelta = Mathf.Abs(buildingPosition.x - transform.position.x);
             var stoppingDistance = verDelta > horDelta ? Mathf.Max(1, buildingTarget.Size.y / 2f) : Mathf.Max(1, buildingTarget.Size.x / 2f);
             var targetPosition = transform.position + dstToBuilding.normalized * (dstToBuilding.magnitude - stoppingDistance);
-            distanceToTarget = dstToBuilding.magnitude;
+            distanceToTarget = dstToBuilding.magnitude - stoppingDistance;
             Move(targetPosition);
         }
     }

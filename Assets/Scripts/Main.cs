@@ -12,6 +12,7 @@ public static class G
     public static StatsDrawer StatsDrawer;
     public static HungrySystem HungrySystem;
     public static EnemySystem EnemySystem;
+    public static ToolMenu ToolMenu;
 }
 
 public class GameState
@@ -102,7 +103,7 @@ public class Main : MonoBehaviour
     {
         if (IsFirst)
         {
-            G.BuildSystem.SetBuildingActive(false);
+            G.ToolMenu.SetMenuActive(false);
         }
         else
         {
@@ -117,7 +118,7 @@ public class Main : MonoBehaviour
 
         yield return SmartWait(1);
 
-        G.BuildSystem.ChangeBuildingActive(true);
+        G.ToolMenu.SetMenuActive(true);
 
         yield return SmartWait(DayDuration);
 
@@ -133,7 +134,7 @@ public class Main : MonoBehaviour
         IsNight = true;
         EventBus.Invoke(new DayCompleteEvent());
 
-        G.BuildSystem.ChangeBuildingActive(false);
+        G.ToolMenu.SetMenuActive(false);
 
         G.EnemySystem.SpawnWave();
 

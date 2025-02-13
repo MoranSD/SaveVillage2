@@ -27,10 +27,12 @@ public class BuildSystem : MonoBehaviour
             view.AddBuilding(building.Id, building.Icon, building.Price);
 
         view.OnBuild += CreateBuilding;
+        EventBus.Subscribe<DayCompleteEvent>(OnDayComplete);
     }
 
     private void OnDestroy()
     {
+        EventBus.Unsubscribe<DayCompleteEvent>(OnDayComplete);
         view.OnBuild -= CreateBuilding;
 
         foreach (var building in Buildings)
@@ -48,13 +50,7 @@ public class BuildSystem : MonoBehaviour
         view.ResetAllowBuilding();
     }
 
-    public void ChangeBuildingActive(bool state)
-    {
-        isAbleToBuild = state;
-        view.ChangeBuildPanelActive(state);
-    }
-
-    public void SetBuildingActive(bool state)
+    public void SetMenuActive(bool state)
     {
         isAbleToBuild = state;
         view.SetBuildPanelActive(state);
@@ -89,5 +85,10 @@ public class BuildSystem : MonoBehaviour
         G.Main.GameState.WorldGrid.FreeSpace(GameMath.WorldToGridWorld(building.transform.position), building.Size);
 
         OnDestroyed?.Invoke(building);
+    }
+
+    private void OnDayComplete(DayCompleteEvent @event)
+    {
+        view.SetBuildPanelActive(false);
     }
 }

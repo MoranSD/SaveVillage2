@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildSystemView : MonoBehaviour
 {
@@ -9,13 +10,21 @@ public class BuildSystemView : MonoBehaviour
     [SerializeField] private Transform buildingsPivot;
     [SerializeField] private BuildingIconView iconViewPrefab;
     [SerializeField] private DragBuilding dragPrefab;
+    [SerializeField] private Button closeButton;
 
     private List<BuildingIconView> buildings = new();
     private Dictionary<int, Sprite> buildingSprites = new();
     private DragBuilding dragBuilding;
 
+    private void Awake()
+    {
+        closeButton.onClick.AddListener(() => SetBuildPanelActive(false));
+    }
+
     private void OnDestroy()
     {
+        closeButton.onClick.RemoveAllListeners();
+
         foreach (var building in buildings)
             building.OnDrag -= OnBeginDragBuilding;
     }
@@ -44,8 +53,11 @@ public class BuildSystemView : MonoBehaviour
         }
     }
 
-    public void SetBuildPanelActive(bool active) => buildingsPivot.gameObject.SetActive(active);
-    public void ChangeBuildPanelActive(bool active) => buildingsPivot.gameObject.SetActive(active);
+    public void SetBuildPanelActive(bool active)
+    {
+        buildingsPivot.gameObject.SetActive(active);
+        closeButton.gameObject.SetActive(active);
+    }
 
     public void SetAllowBuilding(int id)
     {
